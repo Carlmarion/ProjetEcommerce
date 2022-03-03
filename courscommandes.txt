@@ -1,0 +1,200 @@
+Il y a plusieurs manières de coder en PHP :
+- from scratch : procédural, orienté objet...
+- CMS : WordPress...
+- framework : Symfony...
+
+
+FRAMEWORK : environnement de travail.
+Symfony utilise le principe MVC :
+
+- Model : représente la base de données
+- View : représente l'affichage des données à l'utilisateur (la partie front)
+- Controller : un controller est une classe PHP qui fait le lien entre la partie Model et la partie View et qui permet de traiter les données
+
+COMPOSER
+
+Composer est un outil de gestion de dépendances en PHP. Il permet de déclarer les bibliothèques dont votre projet dépend et les gère (installe et met à jour) pour vous.
+
+
+ARBORESCENCE
+
+bin/ : contient les exécutables (dont la console de symfony qu'on utilisera souvent)
+config/ : contient les fichiers de configuration
+migrations/ : contient les fichiers de migrations
+public/ : contient le point d'entrée vers notre application ainsi que les assets de notre application (css, images, etc)
+src/ : contient le code spécifique à notre application 
+templates/ : contient les vues de notre application (la partie "html")
+tests/ : contient les tests
+translations/ : contient les fichiers de traduction
+var/ : contient les fichiers de logs, de cache
+vendor/ : contient les dépendances du projet (les bundles)
+.env : fichier d'environnement
+
+
+
+*********************** COMMANDES **********************
+
+composer create-project symfony/website-skeleton:"^5.4" <nom du projet> : créer un projet symfony en version 5.4
+
+php -S localhost:8000 -t public : lancer un serveur local
+
+php bin/console make:controller <nom du controller> : créer un controller
+
+php bin/console doctrine:database:create : créer la base de données (d:d:c)
+
+php bin/console make:entity <nom de l'entity> : créer une entity
+si l'entity existe déjà, cette commande permet de lui rajouter des champs
+
+php bin/console make:migration : créer un fichier de migration
+
+php bin/console doctrine:migrations:migrate : lancer les migrations en BDD (d:m:m)
+
+php bin/console make:fixtures <nom du fichier> : créer un fichier de fixtures
+
+php bin/console doctrine:fixtures:load : permet de lancer les fixtures (d:f:l)
+
+php bin/console make:form <nom du formulaire> : permet de créer un formulaire
+
+php bin/console make:user : créer une entity User
+
+php bin/console make:registration-form : permet de créer un formulaire de création de compte
+
+php bin/console make:auth : permet de créer un formulaire de connexion
+
+composer require --dev orm-fixtures : installer le bundle des fixtures
+composer require --dev fzaninotto/faker : installer le bundle de faker (pour les fixtures)
+composer require vich/uploader-bundle : installer le bundle d'upload de fichiers
+composer require swiftmailer : installer le bundle d'envoi de mails
+composer require admin:2.* : installer le bundle d'administration en version 2
+composer require stripe/stripe-php : installer stripe
+
+3 piliers fondamentaux de Symfony :
+
+- les controllers (traitement PHP des données)
+- Doctrine (accès aux données, création de requêtes SQL)
+- TWIG (moteur un rendu)
+
+À quoi sert un controller ?
+
+- Ecouter une adresse, ce qu'on appelle dans Symfony une route
+- Analyser la requête envoyée à la route
+- Fabriquer une réponse
+- Renvoyer cette réponse (ex : un affichage, une redirection, un téléchargement...)
+
+
+TWIG 
+
+Twig est un moteur de rendu. Avantages :
+
+- simplicité : facilite l'écriture des affichages, apporte beaucoup de fonctionnalités
+- absence de PHP dans nos affichages, permet d'abstraire les affichages des balises PHP
+- plus simple pour un intégrateur
+
+Twig est une bibliothèque que l'on peut utiliser dans d'autres projets PHP sans Symfony.
+
+Syntaxe :
+
+{{}} => double accolades, ce que l'on appelle l'interpolation (affichage)
+{%%} => commande (exemple : if())
+{##} => commentaires
+
+
+DOCTRINE 
+
+Doctrine est un ORM : Object Relationnal Mapping.
+C'est une brique logicielle qui permet de faire la relation entre notre application et une base de données.
+Le but est de gérer directement au sein de l'application, via des classes et des objets, nos données sans presque jamais toucher à la BDD. Nous n'écrirons presque jamais de SQL.
+
+Doctrine est une bibliothèque que l'on peut utiliser dans d'autres projets PHP sans Symfony.
+
+Voici les outils dont nous allons nous servir :
+
+- Entity : des classes qui représentent les tables en BDD
+- Manager : permet de faire de la manipulation de données (insertion, mise à jour, suppression)
+- Repository : permet de faire de la sélection de données (par exemple, rechercher des articles à une certaine date)
+
+
+Nous allons aussi utiliser ce que l'on appelle des MIGRATIONS.
+
+Une migration est un script qui signifie "Je veux faire passer la BDD d'un état A à un état B".
+Les fichiers de migration ont un ordre précis.
+Exemple :
+- Migration #1 : un fichier qui crée 2 tables dans la BDD
+- Migration #2 : un fichier qui modifie les champs d'une table, crée une table, supprime une table
+- Migration #3 : un fichier qui supprime un champ d'une table, ajoute une relation entre deux tables
+
+Lorsqu'un autre développeur reprendra le projet, il lui suffira de lancer les fichiers de migration pour qu'il se retrouve avec la même BDD que moi.
+
+La philosophie de Symfony est de privilégier les fichiers : les fichiers seront partagés entre les développeurs, sur GIT nous allons télécharger des fichiers et non pas la BDD. La BDD doit venir des fichiers et les fichiers doivent exprimer ce à quoi ressemble la BDD.
+
+
+Dernier outil : les FIXTURES.
+
+Un fichier de fixtures est un script qui va nous permettre de créer un jeu de données au sein de la BDD.
+Ces données vont nous servir à tester notre BDD.
+
+En 3 lignes de commande, nous aurons une BDD en place, avec des tables et des données.
+
+Pour créer la BDD, il faut modifier le fichier .env
+
+
+INJECTION DE DEPENDANCES
+
+
+Dans Symfony, nous avons un service container : tout ce qui est contenu dans Symfony est géré par Symfony.
+Exemple : nous n'avons jamais instancié la classe BlogController (new BlogController) => Symfony se charge de l'instancier et d'appeler ses méthodes.
+
+Notre application regorge d'objets utiles : un objet "Mailer" pour nous aider à envoyer des mails, un objet pour nous aider à enregistrer des données en BDD, etc...
+
+Dans Symfony, ces objets sont appelés des "services" et chaque service vit à l'intérieur du conteneur de service. Ce conteneur permet de centraliser la façon dont les objets sont construits.
+
+Grâce au service container, Symfony peut nous livrer ce dont on a besoin quand on lui demande.
+
+Exemple : la méthode index() a pour rôle de nous afficher la liste des articles de la BDD. Pour fonctionner, cette méthode dépend d'un repository (requêtes de sélection) => le repository est une dépendance.
+
+Donc si nous avons une dépendance, nous pouvons demander à Symfony de nous la fournir plutôt que de la fabriquer nous-même.
+
+
+SECURITE
+
+FIREWALLS : les points d'entrée de notre application que nous allons protéger.
+exemples parties protégées : backoffice, profil...
+exemples parties non protégées : accueil, boutique...
+
+PROVIDERS : l'endroit où nous stockons les données de l'utilisateur (BDD, fichiers, etc)
+
+ENCODERS : permet d'encoder les mots de passe
+
+
+LES SESSIONS
+
+Les variables de sessions sont représentées par une superglobale $_SESSION.
+Elle est donc toujours déclarée à travers notre application.
+
+En PHP, pour faire passer des variables d'une page web à une autre, on utilise des formulaires :
+
+- GET pour passer des informations dans l'URL
+- POST pour cacher les informations à passer.
+
+L'inconvénient est que les informations sont passées une seule fois.
+
+Comment faire pour conserver les informations durant toute la présence d'un visiteur ?
+
+Un cookie est un petit fichier texte crée sur votre ordinateur par le site visité et qui contient des données non sensibles.
+Une session est fichier crée sur le serveur par le site visité et qui contient des données un peu plus sensibles.
+
+Lorsqu'une session est créee, un cookie contenant l'id de la session est aussi crée.
+Cela permet que lorsque l'utilisateur change de page, le site vérifie l'id de la session sur le cookie, et il sait que vous êtes la même personne.
+
+Pour détruire la session, soit :
+- l'utilisateur clique sur un bouton "Déconnexion" qui déclenche la destruction de la session (et donc la destruction des données sauvegardées)
+- soit on attend quelques minutes d'inactivité pour déconnecter l'utilisateur et détruire la session : on parle donc de timeout.
+
+
+STRIPE 
+
+cartes de test :
+
+- validation du paiement : 4242 4242 4242 4242
+- authentification : 4000 0000 0000 3220
+- pas assez de fonds : 4000 0000 0000 9995

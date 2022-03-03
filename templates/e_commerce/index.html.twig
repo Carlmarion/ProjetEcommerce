@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BuyAll Tout ce dont vous n'avez pas besoin{% endblock %}
+
+{% block head %}{{ form(rechercheForm) }}{% endblock %}
+
+
+{% block body %}
+
+<section class="row produits">
+
+{% for produit in produits %}
+
+<div class="card" style="width: 18rem;">
+  <img src="https://picsum.photos/200/200" class="card-img-top" alt="unproduit">
+  <div class="card-body">
+    <h5 class="card-title">{{ produit.nom }}</h5>
+    <p class="card-text">{{ produit.description }}</p>
+    <p class="card-text"><small class="text-muted">{{ produit.prix }}€</small></p>
+    <a href="{{ path('e_commerce_show', {'id': produit.id }) }}" class="btn btn-primary ">Voir les détails de {{ produit.nom }} </a>
+  </div>
+</div>
+    
+{% endfor %}
+
+</section>
+
+{% endblock %}

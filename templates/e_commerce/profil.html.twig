@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Page profil de {{ app.user.username }} {% endblock %}
+
+{% block body %}
+
+<h1 class="text-center">Liste de mes produits ajoutés</h1>
+
+<table class="table">
+    <thead>
+    <th>Nom</th>
+    <th>Categorie</th>
+    <th>Description</th>
+    <th>Prix</th>
+    <th>Image</th>
+    <th>Auteur</th>
+    <th>Date de modification</th>
+    <th>  </th>
+    </thead>
+    <tbody>
+    {% for produit in produitajouts %}
+    <tr>
+        <td>{{ produit.nom }}</td>
+        <td>{{ produit.categorie.titre }}</td>
+        <td>{{ produit.description }}</td>
+        <td>{{ produit.prix }}</td>
+        <td>{{ asset('images/produits/'~ produit.image )}}</td>
+        <td>{{ produit.auteur.username }}</td>
+         <td>{{ produit.updatedAt|date("d/m/Y à H:i:s") }}</td> 
+        
+        <td><a href="{{ path('app_e_commerce', {'id': produit.auteur.username }) }}" class="btn btn-primary">{{ produit.nom }}</a></td>
+    </tr>
+        
+    {% endfor %}
+    </tbody>
+</table>
+<h1><a href="{{ path('e_commerce_create') }}" class="btn btn-primary">Ajouter un nouveau produit</a></h1>
+<h1><a href="{{ path('app_e_commerce') }}" class="btn btn-primary">Accueil du site</a></h1>
+
+{% endblock %}

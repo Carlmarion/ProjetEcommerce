@@ -1,0 +1,87 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}{{ produit.nom }}{% endblock %}
+
+
+{% block body %}
+
+<section class="row article">
+
+<article class="col-md-6 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1">
+    <h2>{{ produit.nom }}</h2>
+    <hr>
+         <div class="metadata">pour une modique somme de {{ produit.prix }} € dans la catégorie {{ produit.categorie.titre }} </div>
+    <hr>
+    <div class="content">
+    
+        <img src="{{ asset('images/produits/'~ produit.image )}}" alt="" class="col-md-12">
+        
+        {{ produit.description|raw }} 
+        
+       
+
+    </div>
+
+
+</article>
+</section>
+
+<h2 class="text-center mx-auto m-3">Commentaires</h2>
+
+<section class="col-md-10 mx-auto">
+
+{% for commentaire in produit.commentaires %}
+    <div class="comments">
+    
+    <div class="row">
+    
+    <div class="col-md-3">
+    
+    {{ commentaire.auteur.username }}
+    (<small>{{ commentaire.createdAt|date("d/m/Y à H:i:s") }}</small>)
+
+
+    </div>
+
+    <div class="col-md-9">
+    {{ commentaire.contenu|raw }}
+    </div>
+    
+    </div>
+
+
+    </div> <hr>
+
+{% endfor %}
+{% if app.user %}
+<div class="d-flex justify-content-center">
+{{ form_start(formContent) }}
+
+{{ form_widget(formContent.contenu, {
+    'attr': {
+        'placeholder': "Contenu du commentaire"
+    }
+}) }}
+<hr>
+<div class="d-flex justify-content-center">
+<button type="submit" name="Envoyer" class="btn btn-primary">Envoyer</button>
+</div>
+{{form_end(formContent) }}
+</div>
+{% else %}
+    
+<div class="col-md-9">
+<p>Vous ne pouvez pas laisser de commentaires sans être connectés</p>
+<a href="{{ path('app_register') }}" class="btn btn-primary">S'inscrire</a>
+<hr>
+<a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+</div>
+
+{% endif %}
+
+
+</section>
+
+
+{% endblock %}
