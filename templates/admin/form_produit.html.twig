@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block title %} BACKOFFICE | Produits{% endblock %}
+
+{% block body %}
+
+<h1 class="dsplay-4 text-center my-4">
+
+{% if editMode %}
+BACKOFFICE | Modification du produit
+{% else %}
+    BACKOFFICE | Ajout d'un produit
+{% endif %}
+
+</h1>
+
+{{ form_start(formProduit, {
+    'attr': { 
+        'class': 'mx-auto'
+    }
+}) }}
+
+{{ form_row(formProduit.nom)}}
+{{ form_row(formProduit.description)}}
+{{ form_row(formProduit.categorie)}}
+{{ form_row(formProduit.imageFile)}}
+
+<button type="submit" class="btn btn-primary">
+{% if editMode %}
+    Enregistrer les modifications
+{% else %}
+    Ajouter le produit        
+{% endif %}
+
+</button>
+{{ form_end(formProduit) }}
+{% endblock %}

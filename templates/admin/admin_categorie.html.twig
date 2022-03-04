@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Gestion des catégories {% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes("success") %}
+    <div class="text-center alert alert-success">
+    {{ message }}
+    </div>
+{% endfor %}
+
+    <a href="{{ path('admin_new_categorie') }}" class="btn btn-success mb-3">Ajouter une catégorie</a>
+<table class="table table-bordered text-center">
+
+<thead>
+<tr>
+{% for colonne in colonnes %}
+<th>{{ colonne }}</th>
+{% endfor %}
+<th>Editer</th>
+<th>Supprimer</th>
+</tr>
+</thead>
+
+
+
+<tbody>
+{% for category in categories %}
+<tr>
+<td>{{ category.id }}</td>
+<td> {{ category.titre }}</td>
+
+
+<td><a href="{{ path('admin_edit_categorie', {'id': category.id}) }}" class="btn btn-warning"><i class="fas fa-spinner fa-pulse"></i></a></td>
+<td><a href="{{ path('admin_delete_categorie', {'id': category.id}) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+
+
+
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+
+
+
+{% endblock %}

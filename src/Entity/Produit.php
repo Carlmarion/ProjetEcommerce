@@ -192,10 +192,6 @@ class Produit
     {
         $this->imageFile = $imageFile;
 
-        if($this->imageFile instanceof uploadedFile)
-        {
-            $this->updated_at = new \DateTime('now');
-        }
         return $this; 
     }
 

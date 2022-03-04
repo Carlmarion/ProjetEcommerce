@@ -12,12 +12,14 @@
 {% for produit in produits %}
 
 <div class="card" style="width: 18rem;">
-  <img src="https://picsum.photos/200/200" class="card-img-top" alt="unproduit">
+  <img src="{{ asset('images/produits/'~ produit.image )}}" class="card-img-top" alt="unproduit">
   <div class="card-body">
     <h5 class="card-title">{{ produit.nom }}</h5>
     <p class="card-text">{{ produit.description }}</p>
     <p class="card-text"><small class="text-muted">{{ produit.prix }}€</small></p>
     <a href="{{ path('e_commerce_show', {'id': produit.id }) }}" class="btn btn-primary ">Voir les détails de {{ produit.nom }} </a>
+    <hr>
+    <a href="{{ path('cart_add', {'id': produit.id, 'route': app.request.attributes.get('_route')}) }}" class="card-link btn btn-primary">Ajouter au panier</a>
   </div>
 </div>
     

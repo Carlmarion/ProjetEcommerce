@@ -54,6 +54,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $commentaires;
 
+   
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();

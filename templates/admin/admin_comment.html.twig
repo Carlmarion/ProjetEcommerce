@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Gestion des commentaires {% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes("success") %}
+    <div class="text-center alert alert-success">
+    {{ message }}
+    </div>
+{% endfor %}
+
+    <a href="{{ path('admin_new_comment') }}" class="btn btn-success mb-3">Ajouter un commentaire</a>
+<table class="table table-bordered text-center">
+
+<thead>
+<tr>
+{% for colonne in colonnes %}
+<th>{{ colonne }}</th>
+{% endfor %}
+<th>Auteur </th>
+<th>Titre </th>
+<th>Editer</th>
+<th>Supprimer</th>
+</tr>
+</thead>
+
+
+
+<tbody>
+{% for comment in comments %}
+<tr>
+<td>{{ comment.id }}</td>
+<td> {{ comment.contenu }}</td>
+<td> {{ comment.createdAt|date("d/m/Y à H:i:s") }}</td>
+<td> {{ comment.auteur.username }}</td>
+<td> {{ comment.produit.nom }}</td>
+
+
+
+<td><a href="{{ path('admin_edit_comment', {'id': comment.id}) }}" class="btn btn-warning"><i class="fas fa-spinner fa-pulse"></i></a></td>
+<td><a href="{{ path('admin_delete_comment', {'id': comment.id}) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+
+
+
+</tr>
+{% endfor %}
+
+</tbody>
+</table>
+
+
+
+{% endblock %}

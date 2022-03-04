@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block title %} BACKOFFICE | Commentaires{% endblock %}
+
+{% block body %}
+
+<h1 class="dsplay-4 text-center my-4">
+
+{% if editMode %}
+BACKOFFICE | Modification d'un commentaire
+{% else %}
+    BACKOFFICE | Ajout d'un commentaire
+{% endif %}
+
+</h1>
+
+{{ form_start(formComment, {
+    'attr': { 
+        'class': 'mx-auto'
+    }
+}) }}
+
+{{ form_row(formComment.contenu)}}
+{{ form_row(formComment.produit )}}
+
+
+
+<button type="submit" class="btn btn-primary">
+{% if editMode %}
+    Enregistrer les modifications
+{% else %}
+    Ajouter le commentaire       
+{% endif %}
+
+</button>
+{{ form_end(formComment) }}
+{% endblock %}

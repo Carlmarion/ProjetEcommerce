@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Backoffice BuyAll{% endblock %}
+
+{% block body %}
+<h1 class="display-4 text-center my-4">BACKOFFICE</h1>
+
+<p class="text-center">Bienvenue sur votre BackOffice</p>
+
+<a href="{{ path('admin_produits')}}" class="col-md-6 offset-md-3 btn btn-dark mb-2">GESTION DES PRODUITS</a>
+
+<a href="{{ path('admin_categorie')}}" class="col-md-6 offset-md-3 btn btn-info mb-2">GESTION DES CATEGORIES</a>
+
+<a href="{{ path('admin_produits')}}" class="col-md-6 offset-md-3 btn btn-info mb-2">GESTION DES UTILISATEURS</a>
+
+<a href="{{ path('admin_comment')}}" class="col-md-6 offset-md-3 btn btn-info mb-2">GESTION DES COMMENTAIRES</a>
+
+{% endblock %}

@@ -22,27 +22,34 @@
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Ecommerce</a>
+				<a class="navbar-brand" href="#">BuyAll</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 					<div class="navbar-nav">
 						<a class="nav-link active" aria-current="page" href="{{path('app_e_commerce')}}">Accueil</a>
-						<a class="nav-link" href="#">Liste des articles</a>
-						<a class="nav-link" href="#">Nouvel article</a>
+						
 
 					{% if app.user %}
 						<a class="nav-link" href="{{ path('e_commerce_profil')}}">Voir le profil de . {{ app.user.username }}</a>
+						<a class="nav-link" href="{{ path('e_commerce_create')}}">Ajouter un produit</a>
 						<a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
-						
+					    <a class="nav-link active position-absolute" href="{{ path('app_cart') }}"><i class="fa fa-cart"></i>
+        
+                        {% set nbProduitsUniques = app.session.get('panier')| length %}
+
+                        {% if nbProduitsUniques > 0 %}
+                         <span class="position-relative top-25 end-50 translate-middle badge rounded-pill bg-dark">{{ nbProduitsUniques }}</span>
+                        {% endif %}
+                        </a>
 					{% else %}
 						
 						<a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
 						<a class="nav-link" href="{{ path('app_login')}}">Se connecter</a>
 					{% endif %}
-					<a href="#"></a>
-					<a href="#">Contact</a>
+					
+					<a class="nav-link" href="#">Contact</a>
 					</div>
 				</div>
 			</div>

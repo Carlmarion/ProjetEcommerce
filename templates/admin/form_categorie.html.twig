@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block title %} BACKOFFICE | Categories{% endblock %}
+
+{% block body %}
+
+<h1 class="dsplay-4 text-center my-4">
+
+{% if editMode %}
+BACKOFFICE | Modification d'une catégorie
+{% else %}
+    BACKOFFICE | Ajout d'une catégorie
+{% endif %}
+
+</h1>
+
+{{ form_start(formCategory, {
+    'attr': { 
+        'class': 'mx-auto'
+    }
+}) }}
+
+{{ form_row(formCategory.titre)}}
+
+
+
+<button type="submit" class="btn btn-primary">
+{% if editMode %}
+    Enregistrer les modifications
+{% else %}
+    Ajouter la catégorie        
+{% endif %}
+
+</button>
+{{ form_end(formCategory) }}
+{% endblock %}
